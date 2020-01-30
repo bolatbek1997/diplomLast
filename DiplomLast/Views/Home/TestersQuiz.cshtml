@@ -1,0 +1,131 @@
+﻿@model System.Collections.Generic.List<DiplomLast.Models.TestViewModel>
+@{
+    ViewBag.Title = "Index";
+}
+
+
+<link rel="stylesheet" href="~/Content/style.css" />
+@*<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>*@
+<script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
+<script type="text/javascript" src="~/Scripts/jquery.tablesorter.js"></script>
+<script src="//ajax.aspnetcdn.com/ajax/jquery.ui/1.10.3/jquery-ui.min.js"></script>
+<link rel="stylesheet" href="http://ajax.aspnetcdn.com/ajax/jquery.ui/1.10.3/themes/sunny/jquery-ui.css">
+
+
+<div class="ui-widget">
+    <input type="text" class="form-control pull-right" id="search" placeholder="Поиск по таблице">
+</div>
+
+<div class="button1">
+    <table class="table table-striped" id="table" cellspacing="0" style="width: 100%;">
+
+        <thead>
+            <tr>
+                <th colspan="4" style="text-align:center">ФИО</th>
+                <th colspan="4" style="text-align:center">ИИН</th>
+                <th colspan="4" style="text-align:center">Имя теста</th>
+                <th colspan="4" style="text-align:center">Резултаты(балл/мах)</th>
+                <th colspan="4" style="text-align:center">Время(время/мах(сек))</th>
+                <th colspan="4" style="text-align:center">date</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (DiplomLast.Models.TestViewModel item in Model.OrderBy(o => o.userPoints))
+            {
+
+                if (item.maxPoints > item.userPoints)
+                {
+
+                    <tr >
+                        <td colspan="4" style="text-align:center">@item.Familya @item.Name @item.Fname</td>
+                        <td colspan="4" style="text-align:center">@item.IIN</td>
+                        <td colspan="4" style="text-align:center">@item.nameTest</td>
+                        <td colspan="4" style="text-align:center">@item.userPoints/@item.maxPoints</td>
+                        <td colspan="4" style="text-align:center">@item.userTimes/@item.maxTimes</td>
+                        <td colspan="4" style="text-align:center">@item.date</td>
+                        @*<td colspan="4" style="text-align:center"> <input type="button" value=@item.IIN text="vibrat" id="One" onclick="postIIN();" /></td>*@
+
+                    </tr>
+
+                }
+                else
+                {
+
+                    <tr >
+                        <td colspan="4" style="text-align:center">@item.Familya @item.Name @item.Fname</td>
+                        <td colspan="4" style="text-align:center" id="iin">@item.IIN</td>
+                        <td colspan="4" style="text-align:center">@item.nameTest</td>
+                        <td colspan="4" style="text-align:center">@item.userPoints/@item.maxPoints</td>
+                        <td colspan="4" style="text-align:center">@item.userTimes/@item.maxTimes</td>
+                        <td colspan="4" style="text-align:center"><input type="date" value="@item.date"></td>
+                    </tr>
+
+                }
+            }
+        </tbody>
+
+    </table>
+</div>
+
+<script>
+    jQuery(document).ready(function () {     
+        $("#table").tablesorter({});
+
+        $('#table tr').click(function () {
+            var id = $(this).find("td").eq(1).html();
+            window.location.href = '/Home/getTesterQuiz/?iin=' + id;
+        });
+
+
+        $("#search").keyup(function () {
+            _this = this;
+
+            $.each($("#table tbody tr"), function () {
+                if ($(this).text().toLowerCase().indexOf($(_this).val().toLowerCase()) === -1) {
+                    $(this).hide();
+                } else {
+                    $(this).show();
+                }
+            });
+        });
+
+        $(function () {          
+            var table = $('#table');
+            //Объекты всех строк таблицы
+            var rows = table.children().children();
+            //Массив соответствующий строкам таблицы
+            var arrayOfTrValues = [];
+            //Перебор строк (DOM-элементы)
+            for (var rowI = 0; rowI < rows.length; rowI++) {
+                //Объект, соответсвующий содержимому одной строки
+                var row = {};
+                //Ячейки текущей строки (DOM-элемент)
+                var tr = $(rows[rowI]).children();
+                //Перебор ячеек (DOM-элементы)
+                for (var trI = 0; trI < tr.length; trI++) {
+                    //Название класса текущей строки (DOM-элемент)
+                    var tdClass = $(tr[trI]).attr('class');
+                    //Запись значения
+                    row[tdClass] = $(tr[trI]).html();
+                    arrayOfTrValues.push($(tr[trI]).html());
+                }
+                //Добавление элемента в результат                
+            }
+            $('#search').autocomplete({
+                source: arrayOfTrValues
+            })
+        });
+
+
+    });
+
+
+
+    //});
+
+
+
+</script>
+
+
+@*window.location.href = '/Branch/Details/' + id;*@

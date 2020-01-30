@@ -1,0 +1,73 @@
+﻿@model DiplomLast.Models.IndexViewModel
+@{
+    ViewBag.Title = "Управление";
+}
+
+<h2>@ViewBag.Title.</h2>
+@*@Html.ActionLink("Регистрация нового пользвателья", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })*@
+<p class="text-success">@ViewBag.StatusMessage</p>
+<div>
+    <h4>Изменение параметров учетной записи</h4>
+    <hr />
+
+    <dl class="dl-horizontal">
+        <dt>Email</dt>
+        <dd> @Model.user.Email </dd>
+        <dt>ФИО</dt>
+        <dd> @Model.user.Name </dd>
+        <dt>Номер телефона</dt>
+        <dd> @Model.user.PhoneNumber </dd>
+
+        <dt>Пароль:</dt>
+        <dd>
+            [
+            @if (Model.HasPassword)
+            {
+                @Html.ActionLink("Смена пароля", "ChangePassword")
+            }
+            else
+            {
+                @Html.ActionLink("Создать", "SetPassword")
+            }
+            ]
+        </dd>
+
+        <dt>Номер телефона </dt>
+        <dd> @Model.PhoneNumber </dd>
+        <dt>Роли</dt>
+        <dd>
+            @foreach (var item in @Model.user.AspNetRoles)
+            {
+                if (item.Name == "admin")
+                {<p>[ Админ ]</p>}
+                else
+                if (item.Name == "tester ")
+                {<p>[ Тестооценчик]</p>}
+                else
+                {<p>[ приниматель к работе]</p>}
+
+
+            }
+        </dd>
+       
+
+            @*<dt>Logins</dt>*@
+
+
+    </dl>
+</div>
+<div>
+    <input type="hidden" id="id" value="@Model.user.Id"/>
+   <button id="btn" class="btn btn-xs">Изменить данные</button>
+</div>
+<script>
+    $(document).ready(function () {
+
+        $('#btn').click(function () {
+            var id = $('#id').val();
+            window.location.href = '/AspNetUsers/Edit/?id=' + id;
+        });
+
+    });
+</script>
+  

@@ -1,0 +1,69 @@
+﻿@model IEnumerable<DiplomLast.Models.QuizResult>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.testXml)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.userPoint)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.maxPoint)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.userTime)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.maxTime)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.testerID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.aspNetUserId)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.testXml)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.userPoint)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.maxPoint)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.userTime)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.maxTime)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.testerID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.aspNetUserId)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.id }) |
+            @Html.ActionLink("Details", "Details", new { id=item.id }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.id })
+        </td>
+    </tr>
+}
+
+</table>

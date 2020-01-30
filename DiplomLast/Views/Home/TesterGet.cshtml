@@ -1,0 +1,279 @@
+﻿@model DiplomLast.Models.Tester
+
+@{
+    ViewBag.Title = "TesterGet";
+}
+
+
+
+<h2>GetTester</h2>
+
+<div id="form">
+
+    @using (Ajax.BeginForm("TesterGet", "home", new AjaxOptions
+    {
+        HttpMethod = "POST",
+        OnSuccess = "OnSuccess",
+        InsertionMode = InsertionMode.Replace
+    }))
+    {
+        @Html.AntiForgeryToken();
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.familiya, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(m => m.familiya, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.familiya, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.name, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(m => m.name, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.name, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.fatherName, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(m => m.fatherName, new { minlength = 4, @class = "form-control required " })
+                @Html.ValidationMessageFor(m => m.fatherName, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.iin, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(m => m.iin, new { maxlength = 12, minlength = 12, @class = "form-control required numeric" })
+                @Html.ValidationMessageFor(m => m.iin, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.birthDate, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10 input-append date form_datetime">
+                <input placeholder="Дата рождения" class="form-control" type="date" name="birthDate">
+                @Html.ValidationMessageFor(m => m.birthDate, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.email, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(m => m.email, null, new { type = "email", @class = "form control" })
+                @Html.ValidationMessageFor(m => m.email, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.phoneNumber, new { @class = "col-md-2 control-label" })
+            @Html.ValidationMessageFor(m => m.phoneNumber, "", new { @class = "text-danger" })
+            <div class="input-group">
+                <div class="input-group-addon">+7</div>
+                <input type="tel" class="form-control" name="phoneNumber" id="phoneNumber" data-match-error="Incorrect MSISDN" data-minlength="10" required="">
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.pol, new { @class = "col-md-2 control-label" })
+            <div class="form-control">
+                муж: <input checked="checked"
+                            id="pol"
+                            name="pol"
+                            type="radio"
+                            value="true" />
+                жен: <input id="pol"
+                            name="pol"
+                            type="radio"
+                            value="false" />
+                @Html.ValidationMessageFor(m => m.pol, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.universityID, new { @class = "col-md-10 control-label" })
+            <div class="form-control">
+                @Html.DropDownListFor(m => m.universityID, new SelectList(Ajax.ViewBag.university, "Id", "Name"))
+                @Html.ValidationMessageFor(m => m.universityID, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.semeynoePolojenie, new { @class = "col-md-10 control-label" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(m => m.semeynoePolojenyeID, new SelectList(Ajax.ViewBag.semeynoePolojenie, "Id", "Name"))
+                @Html.ValidationMessageFor(m => m.semeynoePolojenyeID, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.obrazavanyeID, new { @class = "col-md-10 control-label" })
+            <div class="form-control">
+                @Html.DropDownListFor(m => m.obrazavanyeID, new SelectList(Ajax.ViewBag.obrazavanye, "Id", "Name"))
+                @Html.ValidationMessageFor(m => m.obrazavanyeID, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.zhelaemayaVakansya, new { @class = "col-md-10 control-label" })
+            <div class="form-control">
+                @Html.DropDownListFor(m => m.zhelaemayaVakansya, new SelectList(Ajax.ViewBag.vakansya, "Id", "Name"))
+                @Html.ValidationMessageFor(m => m.zhelaemayaVakansya, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        @*<div class="form-group">
+            Университет
+            <div class="col-md-10">
+                @Html.DropDownListFor(m => m.countryID, new SelectList(Ajax.ViewBag.country, "Id", "Name"), new {id= "country"@*, onchange = "onMyDropDownChange()")*@
+
+        <div class="form-group">
+            <label class="col-md-10 control-label" for="birthDate">Страна</label>
+            <div class="form-control">
+                <select id="country" onchange="changeCountry();">
+                    <option value=0>Выбрать</option>
+                    @foreach (var item in ViewBag.country)
+                    {
+                        <option value=@item.id>@item.name</option>
+                    }
+                </select>            
+            </div>
+        </div>
+
+        <div id="test">
+            <label class="col-md-10 control-label" for="birthDate">Область</label>          
+        </div>
+        <div id="test1">
+            <label class="col-md-10 control-label" for="birthDate">Город</label>
+            @Html.ValidationMessageFor(m => m.Adress.idOBlast, "", new { @class = "text-danger" })
+        </div>
+        @*<div id="test1">
+                <label class="col-md-2 control-label" for="birthDate">Район</label>
+            </div>*@
+        <div class="form-group">
+            @Html.LabelFor(m => m.Adress.name, new { @class = "col-md-10 control-label" })
+            <div class="form-control">
+                @Html.TextBoxFor(m => m.Adress.name, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.Adress.name, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.spretsialist, new { @class = "col-md-10 control-label" })
+            <div class="form-control">
+                @Html.TextBoxFor(m => m.spretsialist, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.spretsialist, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.opitRboty, new { @class = "col-md-10 control-label" })
+            <div class="form-control">
+                @Html.TextBoxFor(m => m.opitRboty, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.opitRboty, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" class="btn btn-default" value="Отправить" />
+        </div>
+
+    }
+</div>
+<div id="uptarget"></div>
+
+
+
+
+<script type="text/javascript">
+
+
+    function changeOblast() {
+        var idd = $('#oblast').val();
+        $.ajax({
+                url: '@Url.Action("GetDropdawn", "Home")',
+
+                //dataType: 'html',
+            data: { name: "oblast", id: idd },
+                success: function (inData) {
+                    console.log(inData);
+                    $('#test1').html(inData);
+                }
+            });
+
+    }
+    @*function changeGorod() {
+        var idd = $('#gorod').val();
+        $.ajax({
+                url: '@Url.Action("GetDropdawn", "Home")',
+
+                //dataType: 'html',
+            data: { name: "oblast", id: idd },
+                success: function (inData) {
+                    console.log(inData);
+                    $('#test1').html(inData);
+                }
+            });
+
+    }*@
+  
+
+
+
+
+    function changeCountry() {
+        var idd = $('#country').val();
+        $.ajax({
+                url: '@Url.Action("GetDropdawn", "Home")',
+
+                //dataType: 'html',
+            data: { name: "country", id: idd },
+                success: function (inData) {
+                    console.log(inData);
+                    $('#test').html(inData);
+                }
+            });
+
+    }
+  
+
+    @*$(document).ready(function () {
+        $('#oblast').change(function (event) {
+            $.ajax({
+
+                url: '@Url.Action("GetDropdawn", "Home")',
+
+                //dataType: 'html',
+                data: { name: "oblast", id: event.target.value },
+                success: function (inData) {
+                    console.log(inData);
+                    $('#test1').html(inData);
+                }
+            });
+        });
+    });*@
+    @*$(document).ready(function () {
+        $('#ddl').change(function (e) {
+            var id = $(this).val();
+           // id = encodeURIComponent@*(@Model.countryID);*@
+            @*$('#results').load('@Url.Action("GetDropdawn", "Home")?a=' + id)*@
+            //});
+    @*});*@
+    @*function onMyDropDownChange()
+    {
+        var id = $(this).val();
+        $.get('@Url.Action("GetDropdawn", "Home")'
+           );
+}*@
+    //$(function () {
+
+    //}
+    function OnSuccess(data) {
+        var results = $('#uptarget'); // получаем нужный элемент
+        results.empty(); //очищаем элемент
+
+        results.append(data); // добавляем данные в список
+    
+    }
+</script>
+
+
+

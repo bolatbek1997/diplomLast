@@ -1,0 +1,82 @@
+﻿@model IEnumerable<DiplomLast.Models.Tester>
+
+@{
+    ViewBag.Title = "getTesterNotQuiz";
+}
+
+<h2 class="text-center">Списк работаискателей несдавшие тест</h2>
+@if (Model == null)
+{
+    <h3 class="text-danger center">Списк пуст</h3>
+}
+else
+{
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th colspan="4" style="text-align:center">ФИО</th>
+                <th colspan="4" style="text-align:center">ИИН</th>
+                <th colspan="4" style="text-align:center">Профессия</th>
+                <th colspan="4" style="text-align:center">Пол</th>
+                <th colspan="4" style="text-align:center">Дата рождения</th>
+                <th colspan="4" style="text-align:center">Опыт работы</th>
+                
+                <th colspan="4" style="text-align:center">Email</th>
+                <th colspan="4" style="text-align:center">Номер телефона</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td colspan="4" style="text-align:center">@item.familiya @item.name @item.fatherName</td>
+                    <td colspan="4" style="text-align:center">@item.iin</td>
+                    <td colspan="4" style="text-align:center">@item.spretsialist</td>
+                    @if (item.pol == true)
+                    {
+                        <td colspan="4" style="text-align:center">муж</td>;
+                    }
+                    else
+                    {
+                        <td colspan="4" style="text-align:center"> жен </td>;
+                    }
+                    <td colspan="4" style="text-align:center">@item.birthDate</td>
+                    <td colspan="4" style="text-align:center">@item.opitRboty лет</td>
+                    
+                    <td colspan="4" style="text-align:center">@item.email</td>
+                    <td colspan="4" style="text-align:center">+7 @item.phoneNumber</td>
+                </tr>
+            }
+
+        </tbody>
+    </table>
+}
+@if (ViewBag.iin == "true")
+{
+    <h3> Вставьте балл</h3>
+    using (Html.BeginForm("AddQuizresult", "home", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+    {
+        <input type="hidden" name="iin" value="@Model.First().iin">
+        <div class="form-control">
+            <level for="name">Тема теста</level>
+            <div class="col-md-10">
+                <input type="text" name="name">
+            </div>
+        </div>
+        <div  class="form-control">
+            <level for="point">Максимум балл 100</level>
+            <div class="col-md-10">
+                <input type="number" name="point" max="100">
+            </div>
+        </div>
+        <div  class="form-control">         
+            <div class="col-md-10">
+               <button type="submit" value="">Отправить</button>
+            </div>
+        </div>
+
+    }
+}
+
+
+

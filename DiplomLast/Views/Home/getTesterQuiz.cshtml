@@ -1,0 +1,225 @@
+﻿@model DiplomLast.Models.OneTesterView
+
+
+<body>
+    @*<header>
+            <p>Модальное окно на jQuery <a href="http://xozblog.ru/2012/11/modal-windows/" class="stuts">Перейти к статье на<span>XoZblog.ru</span></a></p>
+        </header>*@
+    <h2 class="page_name">@Model.fio</h2>
+    <div class="container center-block" id="profile_short">
+        <div class="form-group row">
+
+            <div class="col-sm-2 col-form-label">ИИН</div>
+            <div class="col-sm-10">
+                <a style="color:#1a0823">@Model.iin</a>
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-sm-2 col-form-label">День рождения</div>
+            <div class="col-sm-10">
+                <a style="color:#1a0823">@Model.birthDate@*.Value.Day.@Model.birthDate.Value.Month.@Model.birthDate.Value.Year*@  (@Model.age let)</a>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <div class="col-sm-2 col-form-label">Адрес</div>
+            <div class="col-sm-10">
+                <a style="color:#1a0823">@Model.adressID</a>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <div class="col-sm-2 col-form-label">Еmail</div>
+            <div class="col-sm-10">
+                @*<a style="color:#1a0823" id="email">@Model.email</a>*@
+                <a href="#" class="btn btn-lg btn-success" data-toggle="modal" data-target="#basicModal">
+                    @Model.email
+                </a>
+
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <div class="col-sm-2 col-form-label">Телефон номер</div>
+            <div class="col-sm-10">
+                <a style="color:#1a0823">@Model.phoneNumber</a>
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-sm-2 col-form-label">Пол</div>
+            <div class="col-sm-10">
+                <a style="color:#1a0823">@Model.pol</a>
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-sm-2 col-form-label">Семеиное положение</div>
+            <div class="col-sm-10">
+                <a style="color:#1a0823">@Model.semeynoePolojenyeID</a>
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-sm-2 col-form-label">Специальность</div>
+            <div class="col-sm-10">
+                <a style="color:#1a0823">@Model.spretsialist</a>
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-sm-2 col-form-label">Поыт работы</div>
+            <div class="col-sm-10">
+                <a style="color:#1a0823">@Model.opitRboty лет</a>
+            </div>
+        </div>
+        <div>
+            <table class="table table-bordered" id="example">
+
+                <thead>
+                    <tr>
+                        <th colspan="4" style="text-align:center">id</th>
+                        <th colspan="4" style="text-align:center">Имя теста</th>
+                        <th colspan="4" style="text-align:center">Резултаты(балл/мах)</th>
+                        <th colspan="4" style="text-align:center">Время(время/мах(сек))</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (DiplomLast.Models.QuizResult item in Model.quizResults)
+                    {
+
+                        if (item.maxPoint / 2 > item.userPoint)
+                        {
+
+                            <tr class="danger">
+                                @*<td>
+                                    <form action="#" method="post">
+                                        <table>
+                                            <tr>*@
+                                <td colspan="4" style="text-align:center">@item.id</td>
+                                <td colspan="4" style="text-align:center">
+                                    @item.name
+                                    <input type="hidden" id="iin" value="@item.id">
+                                </td>
+                                <td colspan="4" style="text-align:center">@item.userPoint/@item.maxPoint</td>
+                                <td colspan="4" style="text-align:center">@item.userTime/@item.maxTime</td>
+                                @*<td colspan="4" style="text-align:center"><button type="submit" class="btn btn-default" value="Отправить" /></td>*@
+                                @*</tr>
+                                            </table>
+                                        </form>
+                                    </td>*@
+                            </tr>
+
+                        }
+                        else
+                        {
+
+                            <tr class="success">
+                                @*<td>*@
+                                @*<form action="#" method="post">
+                                    <table>
+                                        <tr>*@
+                                <td colspan="4" style="text-align:center">@item.id</td>
+                                <td colspan="4" style="text-align:center">
+                                    @item.name
+                                    <input type="hidden" id="iin" value="@item.id">
+                                </td>
+                                <td colspan="4" style="text-align:center">@item.userPoint/@item.maxPoint</td>
+                                <td colspan="4" style="text-align:center">@item.userTime/@item.maxTime</td>
+                                @*<td colspan="4" style="text-align:center"><button type="submit" class="btn btn-default" value="Отправить" /></td>*@
+                                @*</tr>
+                                        </table>
+                                    </form>*@
+                                @*</td>*@
+                            </tr>
+
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    @*<a href="#" class="btn btn-lg btn-success" data-toggle="modal" data-target="#basicModal">
+            Click to open Modal
+        </a>*@
+
+
+    <div class="modal fade" id="basicModal" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="myModalLabel">Отправить mail k @Model.email </h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <form id="contact" name="contact" action="#" method="post">
+                    <div class="modal-body">
+                        <input type="hidden" name="email" id="email" value="@Model.email" />
+                        <label>Тема сообщений</label>
+                        <input type="text" id="sub" name="sub" class="txt">
+                        <br>
+                        <label for="msg">Введите сообщение</label>
+                        <textarea id="msg" name="msg" class="txtarea"></textarea>
+
+                        @*<button id="send">Отправить E-mail</button>*@
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        @*<button id="send">Отправить E-mail</button>*@
+
+                        <input type="button" class="btn btn-default" data-dismiss="modal" value="Отправить" onclick="sendMessege();" />
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+    <script type="text/javascript">
+
+
+        function sendMessege() {
+            var subb= $('#sub').val(); 
+            var emaill = $('#email').val();
+            var msgg = $('#msg').val();
+          $.ajax({
+                url: '@Url.Action("sendMessege", "Home")',
+
+              //dataType: 'html',
+              data: { email: emaill, sub: subb, msg: msgg },
+                success: function (data) {
+                    console.log(data);
+                    alert("Сообщение отправлено");
+                }
+            });
+        }
+        function onDropDownChange(e) {
+            var url = '/Home/Index/' + e.value;
+            $.ajax({
+                type: "GET",
+                url: url,
+                data: {},
+                dataType: "html"
+            });
+        }
+
+        function postIIN() {
+            $('#table').each(function () {
+                var iin = $(this).find("td").eq(0).html();
+                window.location.href = '/Home/getTesterQuiz/?iin=' + iin;
+
+    });
+        }
+
+        $(document).ready(function () {
+
+            $('#example tr').click(function () {
+                var id = $(this).find("td").eq(0).html();
+                window.location.href = '/Home/ShowTestResultUser2/?id=' + id;
+            });
+
+        });
+    </script>
+</body>

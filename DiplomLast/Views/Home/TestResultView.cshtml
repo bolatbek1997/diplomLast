@@ -1,0 +1,425 @@
+﻿@model DiplomLast.Models.QuizResultXmlObject.quizReport
+@using DiplomLast.Models
+@{
+    ViewBag.Title = "QuizResult";
+}
+
+<h2>QuizResult</h2>
+
+<input type="hidden" id="email" value="@ViewBag.email ">
+<button id="post">otpravit</button>
+<tbody>
+    <tr>
+        <td align="center" valign="top">
+            <table width="600" cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse;font: 13px 'Open Sans', sans-serif;">
+                <tbody align="left">
+                    <tr align="left">
+                        <td>
+                            <span style="font: 13px 'Open Sans', sans-serif;line-height: 20px">Это автоматическое сообщение с отчетом о результатах теста. Вы видите это сообщение, потому что автор теста включил отправку результатов теста на ваш электронный адрес.</span>
+                            <br><br>
+                            <span style="font: 13px 'Open Sans', sans-serif;line-height: 20px">Оцениваемый тест: <b></b></span>
+                            <br>
+                            <table cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse;font: 13px 'Open Sans', sans-serif;">
+
+
+                                <tbody>
+                                    <tr style="height: 25px;font: 'Open Sans', sans-serif;"><td>Набранный балл:</td><td><b>@Model.summary.score</b> (@Model.summary.percent%)</td></tr>
+                                    <tr style="height: 25px;font: 'Open Sans', sans-serif;"><td>Максимальный балл:</td><td><b>@Model.quizSettings.maxScore</b></td></tr>
+                                    <tr style="height: 25px;font: 'Open Sans', sans-serif;display: table-row;"><td>Проходной балл:</td><td><b>@Model.quizSettings.maxScore*@Model.quizSettings.passingPercent</b> (@Model.quizSettings.passingPercent*100 %)</td></tr>
+                                    <tr style="height: 25px;font: 'Open Sans', sans-serif;"><td>Продолжительность теста:</td><td><b>@Model.summary.time сек из @Model.quizSettings.timeLimit сек</b></td></tr>
+                                    @if (Model.quizSettings.passingPercent > Model.summary.percent)
+                                    {
+                                        <tr style="height: 25px;font: 'Open Sans', sans-serif;"><td>Результат:</td><td><b><b><span style="color: #c91c1c"><b>Тест не сдан</b></span></b></b></td></tr>
+                                    }
+                                    else
+                                    {
+                                        <tr style="height: 25px;font: 'Open Sans', sans-serif;"><td>Результат:</td><td><b><b><span style="color:green"><b>Тест  сдан</b></span></b></b></td></tr>
+                                    }
+                                </tbody>
+                            </table><br>
+                        </td>
+                    </tr>
+                    @for (int i = 0; i < Model.questions.Items.Length; i++)
+                    {
+                        //  TrueFalseQuestion
+                        if (Model.questions.Items[i].GetType() == typeof(DiplomLast.Models.QuizResultXmlObject.quizReportQuestionsTrueFalseQuestion))
+                        {
+                            DiplomLast.Models.QuizResultXmlObject.quizReportQuestionsTrueFalseQuestion q = (QuizResultXmlObject.quizReportQuestionsTrueFalseQuestion)Model.questions.Items[i];
+
+                            <tr align="left">
+                                <td style="font: 13px 'Open Sans', sans-serif;padding-left: 20px;padding-top: 15px;">
+                                    <span style="line-height: 12px"><b>@i. @q.direction<br></b></span>
+                                    <br>
+                                    @for (int j = 0; j < q.answers.answer.Length; j++)
+                                    {
+                                        if (q.answers.correctAnswerIndex == j)
+                                        {
+                                            <span style="color: #09a23f;width: 23px;display: inline-block;height: 16px;vertical-align: bottom"><img src="~/pngs/иконГалочка.png"></span>
+                                        }
+                                        else
+                                        {
+                                            <span style="color: #09a23f;width: 23px;display: inline-block;height: 16px;vertical-align: bottom"><img src="~/pngs/empty.png"></span>
+                                        }
+                                        if (q.answers.userAnswerIndex == j)
+                                        {
+                                            <span style="color: #000000;display: inline-block;height: 16px;vertical-align: bottom"><img src="~/pngs/circle-click.png"></span> @q.answers.answer[j]
+                                            <br><br>
+                                        }
+                                        else
+                                        {
+                                            <span style="color: #000000;display: inline-block;height: 16px;vertical-align: bottom"><img src="~/pngs/circle.png"></span> @q.answers.answer[j]
+                                            <br><br>
+                                        }
+                                    }
+                                    <span style="line-height: 20px">Баллы:<b>@q.awardedPoints</b>/@q.maxPoints  |  Попытки:<b>@q.usedAttempts</b>/@q.maxAttempts</span><br><br>
+                                </td>
+                            </tr>
+                        }
+
+                        if (Model.questions.Items[i].GetType() == typeof(DiplomLast.Models.QuizResultXmlObject.quizReportQuestionsMultipleChoiceQuestion))
+                        {
+                            DiplomLast.Models.QuizResultXmlObject.quizReportQuestionsMultipleChoiceQuestion q = (QuizResultXmlObject.quizReportQuestionsMultipleChoiceQuestion)Model.questions.Items[i];
+
+                            <tr align="left">
+                                <td style="font: 13px 'Open Sans', sans-serif;padding-left: 20px;padding-top: 15px;">
+                                    <span style="line-height: 12px"><b>@i. @q.direction<br></b></span>
+                                    <br>
+                                    @for (int j = 0; j < q.answers.answer.Length; j++)
+                                    {
+                                        if (q.answers.correctAnswerIndex == j)
+                                        {
+                                            <span style="color: #09a23f;width: 23px;display: inline-block;height: 16px;vertical-align: bottom"><img src="~/pngs/иконГалочка.png"></span>
+                                        }
+                                        else
+                                        {
+                                            <span style="color: #09a23f;width: 23px;display: inline-block;height: 16px;vertical-align: bottom"><img src="~/pngs/empty.png"></span>
+                                        }
+                                        if (q.answers.userAnswerIndex == j)
+                                        {
+                                            <span style="color: #000000;display: inline-block;height: 16px;vertical-align: bottom"><img src="~/pngs/circle-click.png"></span> @q.answers.answer[j]
+                                            <br><br>
+                                        }
+                                        else
+                                        {
+                                            <span style="color: #000000;display: inline-block;height: 16px;vertical-align: bottom"><img src="~/pngs/circle.png"></span> @q.answers.answer[j]
+                                            <br><br>
+                                        }
+                                    }
+                                    <span style="line-height: 20px">Баллы:<b>@q.awardedPoints</b>/@q.maxPoints  |  Попытки:<b>@q.usedAttempts</b>/@q.maxAttempts</span><br><br>
+                                </td>
+                            </tr>
+                        }
+
+                        if (Model.questions.Items[i].GetType() == typeof(DiplomLast.Models.QuizResultXmlObject.quizReportQuestionsMultipleResponseQuestion))
+                        {
+                            DiplomLast.Models.QuizResultXmlObject.quizReportQuestionsMultipleResponseQuestion q = (QuizResultXmlObject.quizReportQuestionsMultipleResponseQuestion)Model.questions.Items[i];
+
+                            <tr align="left">
+                                <td style="font: 13px 'Open Sans', sans-serif;padding-left: 20px;padding-top: 15px;">
+                                    <span style="line-height: 12px"><b>@i. @q.direction<br></b></span>
+                                    <br>
+
+                                    @for (int j = 0; j < q.answers.Length; j++)
+                                    {
+                                        if (q.answers[j].correct == true)
+                                        {
+                                            <span style="color: #09a23f;width: 23px;display: inline-block;height: 16px;vertical-align: bottom"><img src="~/pngs/иконГалочка.png"></span>
+                                        }
+                                        else
+                                        {
+                                            <span style="color: #09a23f;width: 23px;display: inline-block;height: 16px;vertical-align: bottom"><img src="~/pngs/empty.png"></span>
+                                        }
+                                        if (q.answers[j].selected == true)
+                                        {
+                                            <span style="color: #000000;display: inline-block;height: 16px;vertical-align: bottom"><img src="~/pngs/circle-click.png"></span> @q.answers[j].Value
+                                            <br><br>
+                                        }
+                                        else
+                                        {
+                                            <span style="color: #000000;display: inline-block;height: 16px;vertical-align: bottom"><img src="~/pngs/circle.png"></span> @q.answers[j].Value
+                                            <br><br>
+                                        }
+                                    }
+                                    <span style="line-height: 20px">Баллы:<b>@q.awardedPoints</b>/@q.maxPoints  |  Попытки:<b>@q.usedAttempts</b>/@q.maxAttempts</span><br><br>
+                                </td>
+                            </tr>
+                        }
+
+                        if (Model.questions.Items[i].GetType() == typeof(DiplomLast.Models.QuizResultXmlObject.quizReportQuestionsFillInTheBlankQuestion))
+                        {
+                            DiplomLast.Models.QuizResultXmlObject.quizReportQuestionsFillInTheBlankQuestion q = (QuizResultXmlObject.quizReportQuestionsFillInTheBlankQuestion)Model.questions.Items[i];
+
+                            <tr align="left">
+                                <td style="font: 13px 'Open Sans', sans-serif;padding-left: 20px;padding-top: 15px;">
+                                    <span style="line-height: 12px"><b>@i. @q.direction<br></b></span>
+                                    <br>
+                                    @if (q.status == "correct")
+                                    {
+                                        <span style="color: #09a23f;width: 23px;display: inline-block;height: 16px;vertical-align: bottom"><img src="~/pngs/иконГалочка.png"></span>
+                                        <span style="color: green">dfdfgdfg</span><br><br>
+                                    }
+                                    else
+                                    {
+                                        <span style="color: #09a23f;width: 23px;display: inline-block;height: 16px;vertical-align: bottom"><img src="~/pngs/иконГалочка.png"></span>
+                                        <span style="color: red">@q.userAnswer</span> <span style="color: #09a23f">( @q.acceptableAnswers.answer)</span><br><br>
+
+                                    }
+
+                                    <span style="line-height: 20px">Баллы:<b>@q.awardedPoints</b>/@q.maxPoints  |  Попытки:<b>@q.usedAttempts</b>/@q.maxAttempts</span><br><br>
+                                </td>
+                            </tr>
+                        }
+
+                        if (Model.questions.Items[i].GetType() == typeof(DiplomLast.Models.QuizResultXmlObject.quizReportQuestionsMatchingQuestion))
+                        {
+                            DiplomLast.Models.QuizResultXmlObject.quizReportQuestionsMatchingQuestion q = (QuizResultXmlObject.quizReportQuestionsMatchingQuestion)Model.questions.Items[i];
+
+                            <tr align="left">
+                                <td style="font: 13px 'Open Sans', sans-serif;padding-left: 20px;padding-top: 15px;">
+                                    <span style="line-height: 12px"><b>@i. @q.direction<br></b></span>
+                                    <br>
+                                    <table border="0" style="border-collapse: collapse;font: 13px 'Open Sans', sans-serif;">
+                                        <tbody>
+
+                                            @for (int j = 0; j < q.matches.Length; j++)
+                                            {
+                                                if (q.userAnswer == null)
+                                                {
+                                                }
+                                                else
+                                                {
+                                                    if (q.matches[j].premiseIndex == q.userAnswer[j].responseIndex)
+                                                    {
+                                                        <tr>
+                                                            <td>
+                                                                <span style="color: #09a23f;width: 23px;display: inline-block;height: 16px;vertical-align: bottom"></span>@j. @q.premises[q.matches[j].premiseIndex]
+                                                            </td>
+                                                            <td>
+                                                                &nbsp;&nbsp;<span style="color: green;width: 23px;display: inline-block;height: 16px;vertical-align: bottom"></span><span style="color: #09a23f">
+                                                                    @j.  @q.responses[q.userAnswer[j].responseIndex]
+                                                                </span>
+                                                            </td>
+                                                        </tr>
+                                                    }
+                                                    else
+                                                    {
+                                                        <tr>
+                                                            <td>
+                                                                <span style="color: #09a23f;width: 23px;display: inline-block;height: 16px;vertical-align: bottom"></span>@j. @q.premises[q.matches[j].premiseIndex]
+                                                            </td>
+                                                            <td>
+                                                                <span style="color: red;width: 23px;display: inline-block;height: 16px;vertical-align: bottom"></span><span style="color: #09a23f">
+                                                                    @j.  @q.responses[q.userAnswer[j].responseIndex]
+                                                                </span>
+                                                            </td>
+                                                        </tr>
+                                                    }
+                                                }
+
+
+                                            }
+                                        </tbody>
+                                    </table>
+                                    <br><br>
+                                    <span style="line-height: 20px">Баллы:<b>@q.awardedPoints</b>/@q.maxPoints  |  Попытки:<b>@q.usedAttempts</b>/@q.maxAttempts</span>
+                                    <br>
+                                    <br>
+                                </td>
+                            </tr>
+                        }
+
+                        if (Model.questions.Items[i].GetType() == typeof(DiplomLast.Models.QuizResultXmlObject.quizReportQuestionsSequenceQuestion))
+                        {
+                            DiplomLast.Models.QuizResultXmlObject.quizReportQuestionsSequenceQuestion q = (QuizResultXmlObject.quizReportQuestionsSequenceQuestion)Model.questions.Items[i];
+
+                            <tr align="left">
+                                <td style="font: 13px 'Open Sans', sans-serif;padding-left: 20px;padding-top: 15px;">
+                                    <span style="line-height: 12px"><b>@i. @q.direction<br></b></span>
+                                    <br>
+                                    @for (int j = 0; j < q.answers.Length; j++)
+                                    {
+                                        if (q.answers[j].userDefinedPosition == j)
+                                        {
+                                            <span style="color: green">
+                                                @q.answers[j].userDefinedPosition. @q.answers[j].Value
+                                            </span><br><br>
+                                        }
+                                        else
+                                        {<span style="color: red">
+                                                @q.answers[j].userDefinedPosition. @q.answers[j].Value
+                                            </span><br><br>
+                                        }
+
+                                    }
+
+
+                                    <span style="line-height: 20px">Баллы:<b>@q.awardedPoints</b>/@q.maxPoints  |  Попытки:<b>@q.usedAttempts</b>/@q.maxAttempts</span><br><br>
+                                </td>
+                            </tr>
+                        }
+
+                        if (Model.questions.Items[i].GetType() == typeof(DiplomLast.Models.QuizResultXmlObject.quizReportQuestionsNumericQuestion))
+                        {
+                            DiplomLast.Models.QuizResultXmlObject.quizReportQuestionsNumericQuestion q = (QuizResultXmlObject.quizReportQuestionsNumericQuestion)Model.questions.Items[i];
+
+                            <tr align="left">
+                                <td style="font: 13px 'Open Sans', sans-serif;padding-left: 20px;padding-top: 15px;">
+                                    <span style="line-height: 12px"><b>@i. @q.direction<br></b></span>
+                                    <br>
+
+                                    @if (q.status == "correct")
+                                    {
+                                        <span style="color: green">
+                                            (=@q.answers.equal)
+                                        </span><br><br>
+                                    }
+                                    else
+                                    {<span style="color: red">
+                                            (=@q.answers.equal)
+                                        </span><br><br>
+                                    }
+
+
+
+
+                                    <span style="line-height: 20px">Баллы:<b>@q.awardedPoints</b>/@q.maxPoints  |  Попытки:<b>@q.usedAttempts</b>/@q.maxAttempts</span><br><br>
+                                </td>
+                            </tr>
+                        }
+
+                        if (Model.questions.Items[i].GetType() == typeof(DiplomLast.Models.QuizResultXmlObject.quizReportQuestionsFillInTheBlankQuestionEx))
+                        {
+                            DiplomLast.Models.QuizResultXmlObject.quizReportQuestionsFillInTheBlankQuestionEx q = (QuizResultXmlObject.quizReportQuestionsFillInTheBlankQuestionEx)Model.questions.Items[i];
+
+                            <tr align="left">
+                                <td style="font: 13px 'Open Sans', sans-serif;padding-left: 20px;padding-top: 15px;">
+                                    <span style="line-height: 12px"><b>@i. @q.direction<br></b></span>
+                                    <br>
+                                    @for (int j = 0; j < q.details.Items.Length; j++)
+                                    {
+                                        if (q.details.Items[j].GetType() == typeof(DiplomLast.Models.QuizResultXmlObject.quizReportQuestionsFillInTheBlankQuestionExDetailsBlank))
+                                        {
+                                            DiplomLast.Models.QuizResultXmlObject.quizReportQuestionsFillInTheBlankQuestionExDetailsBlank d = (QuizResultXmlObject.quizReportQuestionsFillInTheBlankQuestionExDetailsBlank)q.details.Items[j];
+                                            if (d.correct)
+                                            {
+                                                <span style="color: green"> @d.userAnswer </span>
+                                                <br><br>
+                                            }
+                                            else
+                                            {
+                                                <span style="color: red"> @d.userAnswer </span>
+                                                <span style="color: #09a23f;width: 23px;display: inline-block;height: 16px;vertical-align: bottom"><img src="~/pngs/иконГалочка.png"></span>
+                                                <span style="color: green">( @d.answer)</span>
+                                                <br><br>
+                                            }
+
+                                        }
+
+
+                                    }
+                                    <span style="line-height: 20px">Баллы:<b>@q.awardedPoints</b>/@q.maxPoints  |  Попытки:<b>@q.usedAttempts</b>/@q.maxAttempts</span><br><br>
+                                </td>
+                            </tr>
+                        }
+
+
+                        if (Model.questions.Items[i].GetType() == typeof(DiplomLast.Models.QuizResultXmlObject.quizReportQuestionsMultipleChoiceTextQuestion))
+                        {
+                            DiplomLast.Models.QuizResultXmlObject.quizReportQuestionsMultipleChoiceTextQuestion q = (QuizResultXmlObject.quizReportQuestionsMultipleChoiceTextQuestion)Model.questions.Items[i];
+
+                            <tr align="left">
+                                <td style="font: 13px 'Open Sans', sans-serif;padding-left: 20px;padding-top: 15px;">
+                                    <span style="line-height: 12px"><b>@i. @q.direction<br></b></span>
+                                    <br>
+                                    @for (int j = 0; j < q.details.Items.Length; j++)
+                                    {
+                                        if (q.details.Items[j].GetType() == typeof(DiplomLast.Models.QuizResultXmlObject.quizReportQuestionsMultipleChoiceTextQuestionDetailsBlank))
+                                        {
+                                            DiplomLast.Models.QuizResultXmlObject.quizReportQuestionsMultipleChoiceTextQuestionDetailsBlank d = (QuizResultXmlObject.quizReportQuestionsMultipleChoiceTextQuestionDetailsBlank)q.details.Items[j];
+                                            if (d.correctAnswerIndex == d.userAnswerIndex)
+                                            {
+
+                                                <span style="color: green"> @d.answer[d.userAnswerIndex]</span> <br><br>
+                                            }
+                                            else
+                                            {
+                                                <span style="color: red"> @d.answer[d.userAnswerIndex] </span>
+                                                <span style="color: #09a23f;width: 23px;display: inline-block;height: 16px;vertical-align: bottom"><img src="~/pngs/иконГалочка.png"></span>
+                                                <span style="color: green">( @d.answer[d.correctAnswerIndex])</span> <br><br>
+                                            }
+
+                                        }
+
+
+                                    }
+                                    <span style="line-height: 20px">Баллы:<b>@q.awardedPoints</b>/@q.maxPoints  |  Попытки:<b>@q.usedAttempts</b>/@q.maxAttempts</span><br><br>
+                                </td>
+                            </tr>
+                        }
+
+
+                        if (Model.questions.Items[i].GetType() == typeof(DiplomLast.Models.QuizResultXmlObject.quizReportQuestionsWordBankQuestion))
+                        {
+                            DiplomLast.Models.QuizResultXmlObject.quizReportQuestionsWordBankQuestion q = (QuizResultXmlObject.quizReportQuestionsWordBankQuestion)Model.questions.Items[i];
+
+                            <tr align="left">
+                                <td style="font: 13px 'Open Sans', sans-serif;padding-left: 20px;padding-top: 15px;">
+                                    <span style="line-height: 12px"><b>@i. @q.direction<br></b></span>
+                                    <br>
+                                    @for (int j = 0; j < q.details.Items.Length; j++)
+                                    {
+                                        DiplomLast.Models.QuizResultXmlObject.quizReportQuestionsWordBankQuestionDetailsWord d = new DiplomLast.Models.QuizResultXmlObject.quizReportQuestionsWordBankQuestionDetailsWord();
+                                        String ss = null;
+
+                                        if (q.details.Items[j].GetType() == typeof(DiplomLast.Models.QuizResultXmlObject.quizReportQuestionsWordBankQuestionDetailsWord))
+                                        {
+                                            d = (QuizResultXmlObject.quizReportQuestionsWordBankQuestionDetailsWord)q.details.Items[j];
+                                        }
+                                        else if (q.details.Items[j].GetType() == typeof(string))
+                                        {
+                                            ss = (String)q.details.Items[j];
+                                        }
+
+                                        if (d.correct == true)
+                                        {
+
+                                            <span style="color: green">[@d.userAnswer]</span>
+                                            <span> @ss</span> <br><br>
+                                        }
+                                        else
+                                        {
+                                            <span style="color: red">[@d.Value]</span>
+                                            <span style="color: #09a23f;width: 23px;display: inline-block;height: 16px;vertical-align: bottom"><img src="~/pngs/иконГалочка.png"></span>
+                                            <span style="color: green"> (@d.Value) </span>
+                                            <span> @ss</span> <br><br>
+                                        }
+
+                                    }
+                                    <span style="line-height: 20px">Баллы:<b>@q.awardedPoints</b>/@q.maxPoints  |  Попытки:<b>@q.usedAttempts</b>/@q.maxAttempts</span><br><br>
+                                </td>
+                            </tr>
+                        }
+
+
+                    }
+    </tr>
+</tbody>
+            </table>
+        </td>
+    </tr>
+</tbody>
+
+<script>
+    $(document).ready(function () {
+
+        $('#post').click(function () {
+            var email = $('#email').val();
+            var urll= window.location.pathname;
+            window.location.href = '/Home/SendTestresultMail/?email=' + email+'&url='+urll;
+        });
+
+    });
+</script>
+
+
+

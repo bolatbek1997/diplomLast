@@ -1,0 +1,28 @@
+﻿<div class="container jumbotron">
+    <h3>Управление работниками этого сайта</h3>
+    <button id="users">Таблица работниками этого сайта</button>
+</div>
+<div class="container jumbotron">
+    <h3>Управление работаискателями этого сайта</h3>
+    <button id="tester">Таблица работаискателеи этого сайта</button>
+</div>
+<div class="container jumbotron">
+    <h3>Управление работаискателями не сдавшие тесты этого сайта</h3>
+    <button id="tester2">Таблица работаискателями не сдавшие тесты  этого сайта</button>
+</div>
+<script>
+
+    $(document).ready(function () {
+
+        $('#users').click(function () {            
+            window.location.href = '/AspNetUsers/Index/';
+        });
+        $('#tester').click(function () {
+            window.location.href = '/Home/TestersQuiz/';
+        });
+        $('#tester2').click(function () {
+            window.location.href = '/Home/getTesterNotQuiz/';
+        });
+
+    });
+</script>

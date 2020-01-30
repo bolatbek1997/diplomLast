@@ -1,0 +1,82 @@
+﻿
+@{
+    /**/
+
+    ViewBag.Title = "TestView";
+}
+
+
+
+<iframe src="http://192.168.43.60/quiz2?USER_EMAIL=@ViewBag.email" width="750" height="550" frameborder="1"> </iframe>
+<button id="SendMessege" class="btn btn-block">отправить мне в почту</button>
+
+
+<script>
+    $(document).ready(function () {
+
+        $('#SendMessege').click(function () {
+            var id = $(this).find("td").eq(0).html();
+            window.location.href = '/Home/SendTestresultMail';
+        });
+
+    });
+</script>
+
+@*<div class="col-md-offset-2 col-md-10">
+    <input type="submit" class="btn btn-default" value="Отправить" />
+</div>
+
+<div id="loadiframe" class="form-control">
+    <button id="b1" data-src="http://jquery.com/" data-width="500" data-height="400" onclick=" loadFrame();">Button 1111</button>
+    <button id="b2" data-src="http://sitepoint.com" data-width="650" data-height="350"onclick=" loadFrame();">Button 22222</button>
+</div>
+<iframe id='frame' frameborder="0" scrolling="no" width="500" height="400"></iframe>
+
+
+@*<button id="b1" data-src="http://www.w3schools.com" onClick="loadFrame(this)">1Button 1</button>
+<button id="b2" data-src="http://www.sony.com" onClick="loadFrame(this)">1Button 2</button>
+<iframe id="frame1" scrolling="no"></iframe>*@
+@*<script>
+
+    function loadFrame() {
+        var src = $('#b1').data('src'); console.log(src);        
+        var width = $('#b1').data('width'); console.log( width);
+        var height = $('#b1').data('height'); console.log( height);
+       // console.log(src, width, height);
+        $('#frame').css({
+            width: width,
+            height: height
+        }).attr('src', src);
+    }*@
+
+
+
+
+    @*//$('.loadiframe').onclick(function () {
+    //    var src = $(this).data('src');
+    //    var width = $(this).data('width'),
+    //    var height = $(this).data('height');
+    //    console.log(src, width, height);
+    //    $('#frame').html('<iframe id="frame1" src="' + src + '" width="' + width + '" height="' + height + '"></iframe>');
+
+    //});*@
+
+
+    @*//function loadFrame(elm) {
+    //    var frame1 = document.getElementById('frame1');
+    //    frame1.src = elm.dataset.src;
+    //}
+
+
+    //$(function () {
+    //    $('#button').click(function () {
+    //        if (!$('#iframe').length) {
+    //            $('#iframeHolder').html('<iframe id="iframe" src="//player.vimeo.com/video/90429499" width="700" height="450"></iframe>');
+    //        }
+    //    });
+    //});
+</script>*@
+
+
+
+  

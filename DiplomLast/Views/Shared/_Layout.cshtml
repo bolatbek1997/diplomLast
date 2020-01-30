@@ -1,0 +1,72 @@
+﻿@using Microsoft.AspNet.Identity
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title – приложение ASP.NET</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    @*<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>*@
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @*@Scripts.Render("~/bundles/fancybox")
+        @Scripts.Render("~/Content/fancyboxcss")*@
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @*@Html.ActionLink("Имя приложения", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })*@
+            </div>
+            @*@if ( == "admin") { }*@          
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li><a class="navbar-brand" href="/" style="padding-top: 0;"><img src="~/pngs/эмблем.png" alt=""></a></li>
+                    @*<li>@Html.ActionLink("Домашняя страница", "Index", "Home")</li>*@
+                    <li>@Html.ActionLink("Новым сотрудникам", "Create", "Testers")</li>
+
+                    <li>@Html.ActionLink("О нас", "About", "Home")</li>
+                    <li>@Html.ActionLink("Контакт", "Contact", "Home")</li>
+                    @*<li>@Html.ActionLink("Лист новых сотрудников", "TestersQuiz", "Home")</li>*@
+                    @*<li>@Html.ActionLink("Добавление новых сотрудников", "Register", "Account")</li>*@
+                    @*<li>@Html.ActionLink("Контакт", "Contact", "Home")</li>
+        <li>@Html.ActionLink("Контакт", "Contact", "Home")</li>
+        <li>@Html.ActionLink("Контакт", "Contact", "Home")</li>
+        <li>@Html.ActionLink("Контакт", "Contact", "Home")</li>
+        <li>@Html.ActionLink("Контакт", "Contact", "Home")</li>*@
+                </ul>
+                @Html.Partial("_LoginPartial")
+            </div>
+        </div>
+    </div>
+    <div>
+        @*@foreach (var item in User.Identity.GetUserRole())
+        {
+
+        }*@
+        @*@if (User.Identity.GetUserRole()) { }*@
+    </div>
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year – приложение ASP.NET</p>
+        </footer>
+    </div>
+    @*<div id='gameModal' class='modal hide fade in' data-url='@Url.Action("Login","Account")'>
+            <div id='gameContainer'>
+            </div>
+        </div>*@
+
+
+    @RenderSection("scripts", required: false)
+</body>
+</html>

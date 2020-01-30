@@ -1,0 +1,283 @@
+﻿@model DiplomLast.Models.Tester
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2>Create</h2>
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>Tester</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <h3 class="text-center">  @Html.ValidationMessage("model", new { @class = "text-danger" })</h3>
+
+        <div class="container jumbotron">
+            <div class="form-group col-md-6">
+                @Html.LabelFor(model => model.iin, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.iin, new { htmlAttributes = new { maxlength = 12, minlength = 12, @class = "form-control required numeric", @onkeypress = "validate(event)", } })
+                    @Html.ValidationMessageFor(model => model.iin, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group  col-md-6">
+                @Html.LabelFor(model => model.familiya, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.familiya, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.familiya, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group col-md-6">
+                @Html.LabelFor(model => model.name, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.name, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.name, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group col-md-6">
+                @Html.LabelFor(model => model.fatherName, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.fatherName, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.fatherName, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group col-md-6">
+                @Html.LabelFor(model => model.birthDate, htmlAttributes: new { @class = "control-label col-md-2" })
+                @*<div class="col-md-10">
+                        @Html.EditorFor(model => model.birthDate, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.birthDate, "", new { @class = "text-danger" })
+                    </div>*@
+                <div class="col-md-10 input-append date form_datetime">
+                    <input placeholder="Дата рождения" class="form-control" type="date" name="birthDate">
+                    @Html.ValidationMessageFor(m => m.birthDate, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group col-md-6">
+                @Html.LabelFor(model => model.pol, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    муж: <input checked="checked"
+                                id="pol"
+                                name="pol"
+                                type="radio"
+                                value="true" />
+                    жен: <input id="pol"
+                                name="pol"
+                                type="radio"
+                                value="false" />
+                    @*<div class="col-md-10">
+                        <div class="checkbox">
+                            @Html.EditorFor(model => model.pol)*@
+                    @Html.ValidationMessageFor(model => model.pol, "", new { @class = "text-danger" })
+                    @*</div>*@
+                </div>
+            </div>
+            <div class="form-group col-md-6">
+                @Html.LabelFor(model => model.semeynoePolojenyeID, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownList("semeynoePolojenyeID", null, htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.semeynoePolojenyeID, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+
+
+
+        <div class="container jumbotron">
+            <div class="form-group col-md-6">
+                @Html.LabelFor(model => model.phoneNumber, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @*@Html.EditorFor(model => model.phoneNumber, "Тел.", new { htmlAttributes = new { @class = "form-control" } })*@
+                    <div class="input-group">
+                        <div class="input-group-addon">+7</div>
+                        <input type="text" onkeypress="validate(event)" class="form-control required numeric" name="phoneNumber" id="phoneNumber" data-match-error="Incorrect MSISDN" minlength="10" maxlength="10" required="">
+                    </div>
+                    @Html.ValidationMessageFor(model => model.phoneNumber, "", new { @class = "text-danger"})
+                </div>
+            </div>
+
+            <div class="form-group col-md-6">
+                @Html.LabelFor(model => model.email, "Email", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-9">
+                    @Html.EditorFor(model => model.email, new { htmlAttributes = new { @class = "form-control", @id = "email" } })
+                    @Html.ValidationMessageFor(model => model.email, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+
+
+        <div class="container jumbotron">
+            <div class="form-group ">
+                @Html.LabelFor(model => model.obrazavanyeID, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownList("obrazavanyeID", null, htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.obrazavanyeID, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group ">
+                @Html.LabelFor(model => model.universityID, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownList("universityID", null, htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.universityID, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+
+
+        <div class="container jumbotron">
+            <div class="form-group col-md-6">
+                <lebel for="name" class="control-label col-md-2">Страна</lebel>
+                <div class="col-md-10">
+                    <select id="country" onchange="changeCountry();" class="form-control">
+                        <option value=0>Выбрать</option>
+                        @foreach (var item in ViewBag.country)
+                        {
+                            <option value=@item.Value>@item.Text</option>
+                        }
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group col-md-6">
+                <lebel for="name" class="control-label col-md-2">Область</lebel>
+                <div id="test" class="col-md-10">
+                    <select id="oblast" onchange="changeOblast();" class="form-control">
+                        <option value=0>Выбрать</option>
+                        @*@foreach (var item in ViewBag.country)
+                    {
+                        <option value=@item.id>@item.name</option>
+                    }*@
+                    </select>
+                </div>
+            </div>
+            <div class="form-group col-md-6">
+                <lebel for="name" class="control-label col-md-2">Город</lebel>
+                <div id="test1" class="col-md-10">
+                    <select id="oblast" name="gorod" class="form-control">
+                        <option value=0>Выбрать</option>
+
+                    </select>
+                </div>
+            </div>
+           
+            <div class="form-group col-md-6">
+                <lebel for="name" class="control-label col-md-2">Адрес вашего дома</lebel>
+                @*@Html.LabelFor(model => Adress.name, "", htmlAttributes: new { @class = "control-label col-md-2" })*@
+                <div class="col-md-10">
+                    @*@Html.TextBoxFor(m => m.Adress.name, new { @class = "form-control" })*@
+                    <input type="text" class = "form-control" name="adress" id="adress"/>
+                    @Html.ValidationMessageFor(model => model.Adress.name, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+
+
+
+        <div class="container jumbotron">
+
+            <div class="form-group col-md-6">
+                @Html.LabelFor(model => model.spretsialist, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.spretsialist, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.spretsialist, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group col-md-6">
+                @Html.LabelFor(model => model.zhelaemayaVakansya, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownList("zhelaemayaVakansya", null, htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.zhelaemayaVakansya, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group col-md-6">
+                @Html.LabelFor(model => model.opitRboty,"Опыт работы", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.opitRboty, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.opitRboty, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            <div class="col-md-offset-2">
+                <input type="submit" value="Отправить" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+@*<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>*@
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+<script>
+    @*$('#email').change(function () {
+        alert('Text2 changed!');
+        var emaiil = $('#email').val();
+        console.log(emaiil);
+          $.ajax({
+                url: '@Url.Action("EmailVerify", "Testers")',
+
+                //dataType: 'html',
+              data: { email: emaiil},
+              success: function (inData) {
+                  
+                  alert(inData);
+                    console.log(inData);
+                  
+                }
+            });
+    });*@
+
+     function changeCountry() {
+        var idd = $('#country').val();
+        $.ajax({
+                url: '@Url.Action("GetDropdawn", "Home")',
+
+                //dataType: 'html',
+            data: { name: "country", id: idd },
+                success: function (inData) {
+                    console.log(inData);
+                    $('#test').html(inData);
+                }
+            });
+
+    }
+
+     function changeOblast() {
+        var idd = $('#oblast').val();
+        $.ajax({
+                url: '@Url.Action("GetDropdawn", "Home")',
+
+                //dataType: 'html',
+            data: { name: "oblast", id: idd },
+                success: function (inData) {
+                    console.log(inData);
+                    $('#test1').html(inData);
+                }
+            });
+
+        }
+        function validate(evt) {
+            var theEvent = evt || window.event;
+            var key = theEvent.keyCode || theEvent.which;
+            key = String.fromCharCode(key);
+            var regex = /[0-9]|\./;
+            if (!regex.test(key)) {
+                theEvent.returnValue = false;
+                if (theEvent.preventDefault) theEvent.preventDefault();
+            }
+        }
+</script>

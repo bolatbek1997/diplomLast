@@ -1,0 +1,49 @@
+﻿@model IEnumerable<DiplomLast.Models.QuizResult>
+@{
+    ViewBag.Title = "Index";
+}
+<div class="button1">
+    <table class="table table-bordered">
+
+        <thead>
+            <tr>
+                <th colspan="4" style="text-align:center">ФИО</th>
+                <th colspan="4" style="text-align:center">ИИН</th>
+                <th colspan="4" style="text-align:center">Имя теста</th>
+                <th colspan="4" style="text-align:center">Резултаты(балл/мах)</th>
+                <th colspan="4" style="text-align:center">Время(время/мах(сек))</th>
+            </tr>
+        </thead>
+        @*@foreach (DiplomLast.Models.TestViewModel item in ViewBag.items)
+        {
+
+            if (item.maxPoints > item.userPoints)
+            {
+                <tbody>
+                    <tr class="danger">
+                        <td colspan="4" style="text-align:center">@item.Familya @item.Name @item.Fname</td>
+                        <td colspan="4" style="text-align:center">@item.IIN</td>
+                        <td colspan="4" style="text-align:center">@item.nameTest</td>
+                        <td colspan="4" style="text-align:center">@item.userPoints/@item.maxPoints</td>
+                        <td colspan="4" style="text-align:center">@item.userTimes/@item.maxTimes</td>
+                        <td colspan="4" style="text-align:center"> <input type="button" value=@item.IIN id="One" onclick="location.href='index.html'" /></td>
+
+                    </tr>
+                </tbody>
+            }
+            else
+            {
+                <tbody>
+                    <tr class="success">
+                        <td colspan="4" style="text-align:center">@item.Familya @item.Name @item.Fname</td>
+                        <td colspan="4" style="text-align:center">@item.IIN</td>
+                        <td colspan="4" style="text-align:center">@item.nameTest</td>
+                        <td colspan="4" style="text-align:center">@item.userPoints/@item.maxPoints</td>
+                        <td colspan="4" style="text-align:center">@item.userTimes/@item.maxTimes</td>
+                    </tr>
+                </tbody>
+            }
+        }*@
+
+        </table>
+    </div>
